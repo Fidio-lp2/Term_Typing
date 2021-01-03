@@ -5,7 +5,7 @@ import curses
 # 
 def con(value, window, file):
           values = [value]
-          string = ''
+          #string = ''
           # pring debug
           #print(type(values[0]))
     
@@ -30,7 +30,7 @@ def con(value, window, file):
                     #print(insert_zero(bin(values[0] & 0b00001111), 6))
                     #print(tmp)
                     value = int(tmp, 2)
-                    string = tmp
+                    #string = tmp
           elif 0x000000F0 <= value <= 0x000000F7:
                     values.append(window.getch())
                     values.append(window.getch())
@@ -47,7 +47,7 @@ def con(value, window, file):
           ENTER = 10
 
           # print debug
-          window.addstr(5,1,str(value))
+          #window.addstr(5,1,str(value))
 
           # judge scroll event
           if value == WHEEL_UP:

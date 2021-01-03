@@ -11,6 +11,9 @@ class Display:
           file_len = 0
           file_data = []
           input_line = []
+          count = 0
+          miss_count = 0
+          count_len = 0
           screen_x = 0
           screen_y = 0
           corsor_first_pos_x = 0
@@ -45,6 +48,8 @@ class Display:
 
                     for i in range(0,len(self.file_data),1):
                               self.input_line.append(str(i+1).zfill(fill_lengs) + ': ' + self.file_data[i].rstrip())
+                              self.count += len(self.file_data[i].rstrip())
+                              self.count_len = len(str(self.count))
                               #win.addstr(i,i+1,line)
 
           def get_screen_x(self):
@@ -68,22 +73,37 @@ class Display:
           def get_progress(self):
                     return self.progress
 
-          # ここら辺をもうちょっとprogress使ってうまくやらなければいけないでしょう
+          def get_count(self):
+                    return self.count
+
+          def get_count_len(self):
+                    return self.count_len
+
+          def get_miss_count(self):
+                    return self.miss_count
+
+          def increase_miss_count(self):
+                    self.miss_count +=1
+
+          def decrease_count(self):
+                    self.count -= 1
+                    return self. count
+
           def print_text(self, window):
                     try:
                               win = window
-                              for i in range(1,len(self.input_line),1):
+                              for i in range(1,len(self.input_line)+1,1):
                                         if i <= self.screen_y-2 :
                                                   win.addstr(i,1,self.input_line[i-1])
                     except curses.error:
                               pass
 
           #
-          # pressed enter process エンターキーを押されて、まだ下に行く余地があるならば画面を下に下げる。
+          # pressed enter process
           #
           def enter_process(self,win):
                     self.progress += 1
-                    # 改行時に画面が推移することを確かめる(ここまできてますよ!)
+
                     if 0  <= (self.file_len - self.progress - (self.screen_y-2)):
                               # init window
                               for i in range(1,self.screen_y-1,1):
